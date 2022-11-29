@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 [Our repository link:](https://github.com/AndrewGuo525/lab5.git)
@@ -27,9 +28,30 @@ hc_single <- hclust(file_dist, method = 'single')
 hc_average <- hclust(file_dist, method = 'average')
 
 ## Step 5 and Step 6
-matrix(c(sum(cutree(hc_complete, 2)[1:20] == 1), sum(cutree(hc_complete, 2)[1:20] == 2), sum(cutree(hc_complete, 2)[21:40] == 1), sum(cutree(hc_complete, 2)[21:40] == 2)), ncol = 2)
-matrix(c(sum(cutree(hc_single, 2)[1:20] == 1), sum(cutree(hc_single, 2)[1:20] == 2), sum(cutree(hc_single, 2)[21:40] == 1), sum(cutree(hc_single, 2)[21:40] == 2)), ncol = 2)
-matrix(c(sum(cutree(hc_average, 2)[1:20] == 1), sum(cutree(hc_average, 2)[1:20] == 2), sum(cutree(hc_average, 2)[21:40] == 1), sum(cutree(hc_average, 2)[21:40] == 2)), ncol = 2)
+#matrix(c(sum(cutree(hc_complete, 2)[1:20] == 1), sum(cutree(hc_complete, 2)[1:20] == 2), sum(cutree(hc_complete, 2)[21:40] == 1), sum(cutree(hc_complete, 2)[21:40] == 2)), ncol = 2)
+#matrix(c(sum(cutree(hc_single, 2)[1:20] == 1), sum(cutree(hc_single, 2)[1:20] == 2), sum(cutree(hc_single, 2)[21:40] == 1), sum(cutree(hc_single, 2)[21:40] == 2)), ncol = 2)
+#matrix(c(sum(cutree(hc_average, 2)[1:20] == 1), sum(cutree(hc_average, 2)[1:20] == 2), sum(cutree(hc_average, 2)[21:40] == 1), sum(cutree(hc_average, 2)[21:40] == 2)), ncol = 2)
+
+
+
+
+complete_group <- as.data.frame(cutree(hc_complete, 2))
+single_group <- as.data.frame(cutree(hc_single, 2))
+average_group <- as.data.frame(cutree(hc_average, 2))
+
+
+a <- complete_group %>% mutate(status = ifelse(cutree(hc_complete, 2)==1,"healthy","disease"))%>% 
+  mutate(complete = cutree(hc_complete, 2))%>% select(2:3)
+
+b <- single_group  %>% mutate(status = ifelse(cutree(hc_single, 2)==1,"healthy","disease"))%>% 
+  mutate(single = cutree(hc_single, 2))%>% select(2:3)
+
+c <- average_group %>% mutate(status = ifelse(cutree(hc_average, 2)==1,"healthy","disease"))%>% 
+  mutate(average = cutree(hc_average, 2))%>% select(2:3)
+
+t(table(a)) # table for complete
+t(table(b)) # table for single
+t(table(c)) # table for single
 ```
 
 ## Question 2
