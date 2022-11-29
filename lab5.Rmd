@@ -15,16 +15,39 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+## Question 1
+
+```{r}
+## Step 1 and Step 2
+file <- scale(t(read.csv("/Users/andrewguo/Desktop/Ch10Ex11.csv", header = FALSE)))
+
+## Step 3
+file_dist <- dist(file, method = "euclidean")
+
+## Step 4
+hc_complete <- hclust(file_dist, method = 'complete')
+hc_single <- hclust(file_dist, method = 'single')
+hc_average <- hclust(file_dist, method = 'average')
+
+## Step 5 and Step 6
+matrix(c(sum(cutree(hc_complete, 2)[1:20] == 1), sum(cutree(hc_complete, 2)[1:20] == 2), sum(cutree(hc_complete, 2)[21:40] == 1), sum(cutree(hc_complete, 2)[21:40] == 2)), ncol = 2)
+matrix(c(sum(cutree(hc_single, 2)[1:20] == 1), sum(cutree(hc_single, 2)[1:20] == 2), sum(cutree(hc_single, 2)[21:40] == 1), sum(cutree(hc_single, 2)[21:40] == 2)), ncol = 2)
+matrix(c(sum(cutree(hc_average, 2)[1:20] == 1), sum(cutree(hc_average, 2)[1:20] == 2), sum(cutree(hc_average, 2)[21:40] == 1), sum(cutree(hc_average, 2)[21:40] == 2)), ncol = 2)
 ```
 
-## Including Plots
+## Question 2
 
-You can also embed plots, for example:
+```{r}
+## Step 3
+file_dist2 <- amap::Dist(file, method = 'correlation')
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+## Step 4
+hc_complete2 <- hclust(file_dist2, method = 'complete')
+hc_single2 <- hclust(file_dist2, method = 'single')
+hc_average2 <- hclust(file_dist2, method = 'average')
+
+## Step 5 and Step 6
+matrix(c(sum(cutree(hc_complete2, 2)[1:20] == 1), sum(cutree(hc_complete2, 2)[1:20] == 2), sum(cutree(hc_complete2, 2)[21:40] == 1), sum(cutree(hc_complete2, 2)[21:40] == 2)), ncol = 2)
+matrix(c(sum(cutree(hc_single2, 2)[1:20] == 1), sum(cutree(hc_single2, 2)[1:20] == 2), sum(cutree(hc_single2, 2)[21:40] == 1), sum(cutree(hc_single2, 2)[21:40] == 2)), ncol = 2)
+matrix(c(sum(cutree(hc_average2, 2)[1:20] == 1), sum(cutree(hc_average2, 2)[1:20] == 2), sum(cutree(hc_average2, 2)[21:40] == 1), sum(cutree(hc_average2, 2)[21:40] == 2)), ncol = 2)
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
