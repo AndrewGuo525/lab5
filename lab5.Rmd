@@ -1,6 +1,6 @@
 ---
 title: "lab5"
-author: "Group 4: Jiayi Guo"
+author: "Group 4: Jiayi Guo, Zhan shi, Wanni Lei"
 date: "2022-11-28"
 output: html_document
 ---
