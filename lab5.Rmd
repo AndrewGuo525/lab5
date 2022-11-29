@@ -18,7 +18,7 @@ library(tidyverse)
 ## Step 1&2: Load and Scale the data
 file <- scale(t(read.csv("/Users/andrewguo/Desktop/Ch10Ex11.csv", header = FALSE)))
 
-## Step 3: Calculate the Euclidean distance between the observations.
+## Step 3: Calculate the Euclidean distance between the observations
 file_dist <- dist(file, method = "euclidean")
 
 ## Step 4: Perform hierarchical clustering
@@ -27,46 +27,63 @@ hc_complete <- hclust(file_dist, method = 'complete')
 hc_single <- hclust(file_dist, method = 'single')
 hc_average <- hclust(file_dist, method = 'average')
 
-## Step 5 and Step 6
-#matrix(c(sum(cutree(hc_complete, 2)[1:20] == 1), sum(cutree(hc_complete, 2)[1:20] == 2), sum(cutree(hc_complete, 2)[21:40] == 1), sum(cutree(hc_complete, 2)[21:40] == 2)), ncol = 2)
-#matrix(c(sum(cutree(hc_single, 2)[1:20] == 1), sum(cutree(hc_single, 2)[1:20] == 2), sum(cutree(hc_single, 2)[21:40] == 1), sum(cutree(hc_single, 2)[21:40] == 2)), ncol = 2)
-#matrix(c(sum(cutree(hc_average, 2)[1:20] == 1), sum(cutree(hc_average, 2)[1:20] == 2), sum(cutree(hc_average, 2)[21:40] == 1), sum(cutree(hc_average, 2)[21:40] == 2)), ncol = 2)
-
-
-
-
+## Step 5: Determine clusters for 2 groups from all three methods using cutree()
 complete_group <- as.data.frame(cutree(hc_complete, 2))
 single_group <- as.data.frame(cutree(hc_single, 2))
 average_group <- as.data.frame(cutree(hc_average, 2))
 
+## Step 6: Make three contingency tables for the results
+a <- complete_group %>% mutate(status = ifelse(cutree(hc_complete, 2) == 1, "healthy", "disease")) %>% 
+  mutate(complete = cutree(hc_complete, 2)) %>% select(2:3)
 
-a <- complete_group %>% mutate(status = ifelse(cutree(hc_complete, 2)==1,"healthy","disease"))%>% 
-  mutate(complete = cutree(hc_complete, 2))%>% select(2:3)
+b <- single_group %>% mutate(status = ifelse(cutree(hc_single, 2) == 1, "healthy", "disease")) %>% 
+  mutate(single = cutree(hc_single, 2)) %>% select(2:3)
 
-b <- single_group  %>% mutate(status = ifelse(cutree(hc_single, 2)==1,"healthy","disease"))%>% 
-  mutate(single = cutree(hc_single, 2))%>% select(2:3)
-
-c <- average_group %>% mutate(status = ifelse(cutree(hc_average, 2)==1,"healthy","disease"))%>% 
-  mutate(average = cutree(hc_average, 2))%>% select(2:3)
+c <- average_group %>% mutate(status = ifelse(cutree(hc_average, 2) == 1, "healthy", "disease")) %>% 
+  mutate(average = cutree(hc_average, 2)) %>% select(2:3)
 
 t(table(a)) # table for complete
 t(table(b)) # table for single
 t(table(c)) # table for single
+
+## Bonus: Plotting
+plot(hc_complete)
+plot(hc_single)
+plot(hc_average)
 ```
 
 ## Question 2
 
 ```{r}
-## Step 3
+## Step 3: Calculate the Euclidean distance between the observations
 file_dist2 <- amap::Dist(file, method = 'correlation')
 
-## Step 4
+## Step 4: Perform hierarchical clustering
 hc_complete2 <- hclust(file_dist2, method = 'complete')
 hc_single2 <- hclust(file_dist2, method = 'single')
 hc_average2 <- hclust(file_dist2, method = 'average')
 
-## Step 5 and Step 6
-matrix(c(sum(cutree(hc_complete2, 2)[1:20] == 1), sum(cutree(hc_complete2, 2)[1:20] == 2), sum(cutree(hc_complete2, 2)[21:40] == 1), sum(cutree(hc_complete2, 2)[21:40] == 2)), ncol = 2)
-matrix(c(sum(cutree(hc_single2, 2)[1:20] == 1), sum(cutree(hc_single2, 2)[1:20] == 2), sum(cutree(hc_single2, 2)[21:40] == 1), sum(cutree(hc_single2, 2)[21:40] == 2)), ncol = 2)
-matrix(c(sum(cutree(hc_average2, 2)[1:20] == 1), sum(cutree(hc_average2, 2)[1:20] == 2), sum(cutree(hc_average2, 2)[21:40] == 1), sum(cutree(hc_average2, 2)[21:40] == 2)), ncol = 2)
+## Step 5: Determine clusters for 2 groups from all three methods using cutree()
+complete_group2 <- as.data.frame(cutree(hc_complete2, 2))
+single_group2 <- as.data.frame(cutree(hc_single2, 2))
+average_group2 <- as.data.frame(cutree(hc_average2, 2))
+
+## Step 6: Make three contingency tables for the results
+d <- complete_group2 %>% mutate(status = ifelse(cutree(hc_complete2, 2) == 1, "healthy", "disease")) %>% 
+  mutate(complete = cutree(hc_complete2, 2)) %>% select(2:3)
+
+e <- single_group2 %>% mutate(status = ifelse(cutree(hc_single2, 2) == 1, "healthy", "disease")) %>% 
+  mutate(single = cutree(hc_single2, 2)) %>% select(2:3)
+
+f <- average_group2 %>% mutate(status = ifelse(cutree(hc_average2, 2) == 1, "healthy", "disease")) %>% 
+  mutate(average = cutree(hc_average2, 2)) %>% select(2:3)
+
+t(table(d)) # table for complete
+t(table(e)) # table for single
+t(table(f)) # table for single
+
+## Bonus: Plotting
+plot(hc_complete2)
+plot(hc_single2)
+plot(hc_average2)
 ```
