@@ -55,6 +55,7 @@ t(table(a)) # table for complete
 t(table(b)) # table for single
 t(table(c)) # table for single
 ```
+Based on three plots above, we found whatever the algorithm we use, the table would be the same. Also, the factual status are corresponding to the diagnosis status.  
 
 ## Question 2
 
@@ -95,3 +96,5 @@ t(table(d)) # table for complete
 t(table(e)) # table for single
 t(table(f)) # table for single
 ```
+
+Based on three plots above, we found whatever the algorithm we use, the table would be the same. Also, the factual status are corresponding to the diagnosis status.
